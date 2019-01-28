@@ -207,9 +207,18 @@ public class AddressBook {
      */
 
     public static void main(String[] args) {
+        startup(args);
+        run();
+        return;
+    }
+
+    private static void startup(String[] args) {
         showWelcomeMessage();
         processProgramArgs(args);
         loadDataFromStorage();
+    }
+
+    private static void run() {
         while (true) {
             String userCommand = getUserInput();
             echoUserCommand(userCommand);
