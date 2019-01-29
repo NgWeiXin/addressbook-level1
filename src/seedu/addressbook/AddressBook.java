@@ -34,7 +34,7 @@ import java.util.Set;
  * This class is used to maintain a list of person data which are saved
  * in a text file.
  **/
-public class AddressBook {
+public class TODOAddressBook {
 
     /**
      * Default file path used if the user doesn't provide the file name.
