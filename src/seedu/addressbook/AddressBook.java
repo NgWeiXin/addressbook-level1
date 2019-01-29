@@ -34,7 +34,7 @@ import java.util.Set;
  * This class is used to maintain a list of person data which are saved
  * in a text file.
  **/
-public class TODOAddressBook {
+public class AddressBook {
 
     /**
      * Default file path used if the user doesn't provide the file name.
@@ -611,13 +611,17 @@ public class TODOAddressBook {
         System.out.print(LINE_PREFIX + "Enter command: ");
         String inputLine = SCANNER.nextLine();
         // silently consume all blank and comment lines
-        while (inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER) {
+        while (checkInputLine(inputLine)) {
             inputLine = SCANNER.nextLine();
         }
         return inputLine;
     }
 
-   /*
+    private static boolean checkInputLine(String inputLine) {
+        return inputLine.trim().isEmpty() || inputLine.trim().charAt(0) == INPUT_COMMENT_MARKER;
+    }
+
+    /*
     * NOTE : =============================================================
     * Note how the method below uses Java 'Varargs' feature so that the
     * method can accept a varying number of message parameters.
@@ -993,20 +997,7 @@ public class TODOAddressBook {
      * @return phone number argument WITHOUT prefix
      */
     private static String extractPhoneFromPersonString(String encoded) {
-        final int indexOfPhonePrefix = encoded.indexOf(PERSON_DATA_PREFIX_PHONE);
-        final int indexOfEmailPrefix = encoded.indexOf(PERSON_DATA_PREFIX_EMAIL);
-
-        // phone is last arg, target is from prefix to end of string
-        if (indexOfPhonePrefix > indexOfEmailPrefix) {
-            return removePrefixSign(encoded.substring(indexOfPhonePrefix, encoded.length()).trim(),
-                    PERSON_DATA_PREFIX_PHONE);
-
-        // phone is middle arg, target is from own prefix to next prefix
-        } else {
-            return removePrefixSign(
-                    encoded.substring(indexOfPhonePrefix, indexOfEmailPrefix).trim(),
-                    PERSON_DATA_PREFIX_PHONE);
-        }
+       return extractString(encoded);
     }
 
     /**
@@ -1016,6 +1007,10 @@ public class TODOAddressBook {
      * @return email argument WITHOUT prefix
      */
     private static String extractEmailFromPersonString(String encoded) {
+        return extractString(encoded);
+    }
+
+    private static String extractString(String encoded) {
         final int indexOfPhonePrefix = encoded.indexOf(PERSON_DATA_PREFIX_PHONE);
         final int indexOfEmailPrefix = encoded.indexOf(PERSON_DATA_PREFIX_EMAIL);
 
